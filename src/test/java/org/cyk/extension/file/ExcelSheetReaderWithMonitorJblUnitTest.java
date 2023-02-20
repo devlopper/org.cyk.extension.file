@@ -1,0 +1,65 @@
+package org.cyk.extension.file;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import org.cyk.extension.file.api.excel.AbstractWorkBookGetterImpl;
+import org.cyk.extension.file.api.excel.SheetGetter;
+import org.cyk.extension.file.api.excel.SheetReader;
+import org.cyk.extension.file.api.excel.WorkBookGetter;
+import org.cyk.extension.file.impl.excel.poi.monitorjbl.SheetReaderImpl;
+import org.cyk.extension.file.impl.excel.poi.monitorjbl.WorkBookGetterImpl;
+import org.jboss.weld.junit5.WeldInitiator;
+import org.jboss.weld.junit5.WeldJunit5Extension;
+import org.jboss.weld.junit5.WeldSetup;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+
+//@EnableWeld
+@ExtendWith(WeldJunit5Extension.class)
+public class ExcelSheetReaderWithMonitorJblUnitTest {
+	
+	@WeldSetup
+	  public WeldInitiator weld = WeldInitiator.of(WeldInitiator.createWeld()
+	                                           .addPackage(Boolean.TRUE,Configuration.class)
+	                                           .alternatives(WorkBookGetterImpl.class,SheetReaderImpl.class)
+	                                           );
+	
+	@Inject @Alternative private SheetReader sheetReader;
+	
+	@Test
+	public void read_noInputStream() throws Exception {
+		RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+			sheetReader.read(new SheetReader.Arguments());
+	  });
+
+	  Assertions.assertEquals(AbstractWorkBookGetterImpl.NO_INPUT_STREAM_MESSAGE, exception.getMessage());
+	}
+	
+	@Test
+	public void read() throws Exception {
+		String[][] array = sheetReader.read(new SheetReader.Arguments()
+				.setSheetGetterArguments(new SheetGetter.Arguments().setWorkBookGetterArguments(new WorkBookGetter.Arguments().setIsDynamic(Boolean.TRUE).setInputStream(new FileInputStream(
+				"src/test/resources/org/cyk/extension/file/api/excel/01.xlsx")))));
+		assertThat(array[0][0]).isEqualTo("Column01");
+		assertThat(array[0][1]).isEqualTo("Column02");
+		assertThat(array[0][2]).isEqualTo("Column03");
+		assertThat(array[0][3]).isBlank();
+		assertThat(array[0][4]).isEqualTo("Column04");
+	}
+	
+	@Test
+	public void all_250000() throws Exception {
+		String[][] arrays = sheetReader.read(new SheetReader.Arguments().setNumberOfColumns(2).setSheetGetterArguments(new SheetGetter.Arguments()
+				.setWorkBookGetterArguments(new WorkBookGetter.Arguments().setIsDynamic(Boolean.TRUE)
+						.setFile(new File("src/test/resources/org/cyk/extension/file/api/excel/chargements_all01.xlsx"))
+						)));
+		assertThat(arrays.length).isEqualTo(257699);
+	}
+}

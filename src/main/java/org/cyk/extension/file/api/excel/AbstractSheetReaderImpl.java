@@ -20,19 +20,22 @@ public abstract class AbstractSheetReaderImpl implements SheetReader,Serializabl
 		Integer numberOfColumns = arguments.getNumberOfColumns();
 		Integer fromRowIndex = arguments.getFromRowIndex() == null ? 0 : arguments.getFromRowIndex();
 		Integer numberOfRows = arguments.getNumberOfRows();
-		if(numberOfColumns == null) {
-    		Integer maximalNumberOfColumns = getMaximalNumberOfColumns(sheet);
-    		numberOfColumns = maximalNumberOfColumns == null ? null : maximalNumberOfColumns - fromColumnIndex;
-    		if(numberOfColumns == null || numberOfColumns < 1)
-    			return null;
-    	}
-		
-		if(numberOfRows == null) {
-    		Integer maximalNumberOfRows = getMaximalNumberOfRows(sheet);
-    		numberOfRows = maximalNumberOfRows == null ? null : maximalNumberOfRows - fromRowIndex;
-    		if(numberOfRows == null || numberOfRows < 1)
-    			return null;	
-    	}
+		Boolean isDynamic = Boolean.TRUE.equals(arguments.getSheetGetterArguments().getWorkBookGetterArguments().getIsDynamic());
+		if(!isDynamic) {
+			if(numberOfColumns == null) {
+	    		Integer maximalNumberOfColumns = getMaximalNumberOfColumns(sheet);
+	    		numberOfColumns = maximalNumberOfColumns == null ? null : maximalNumberOfColumns - fromColumnIndex;
+	    		if(numberOfColumns == null || numberOfColumns < 1)
+	    			return null;
+	    	}
+			
+			if(numberOfRows == null) {
+	    		Integer maximalNumberOfRows = getMaximalNumberOfRows(sheet);
+	    		numberOfRows = maximalNumberOfRows == null ? null : maximalNumberOfRows - fromRowIndex;
+	    		if(numberOfRows == null || numberOfRows < 1)
+	    			return null;	
+	    	}
+		}
 		return __read__(sheet, fromColumnIndex, numberOfColumns, fromRowIndex, numberOfRows);
 	}
 	

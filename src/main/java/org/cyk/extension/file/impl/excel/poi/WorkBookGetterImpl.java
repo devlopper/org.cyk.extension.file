@@ -1,9 +1,10 @@
-package org.cyk.extension.file.impl.excel;
+package org.cyk.extension.file.impl.excel.poi;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.cyk.extension.file.api.excel.AbstractWorkBookGetterImpl;
 import org.cyk.extension.file.api.excel.WorkBook;
@@ -17,7 +18,8 @@ public class WorkBookGetterImpl extends AbstractWorkBookGetterImpl implements Se
 	@Override
 	protected WorkBook __get__(InputStream inputStream) {
 		try {
-			return new WorkBook((WorkbookFactory.create(inputStream)));
+			Workbook workbook = WorkbookFactory.create(inputStream);
+			return new WorkBook(workbook);
 		} catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}

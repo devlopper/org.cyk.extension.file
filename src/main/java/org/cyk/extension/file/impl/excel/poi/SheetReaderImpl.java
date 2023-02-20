@@ -1,4 +1,4 @@
-package org.cyk.extension.file.impl.excel;
+package org.cyk.extension.file.impl.excel.poi;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,6 +19,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class SheetReaderImpl extends AbstractSheetReaderImpl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String[][] __read__(org.cyk.extension.file.api.excel.Sheet sheet,Integer fromColumnIndex,Integer numberOfColumns,Integer fromRowIndex,Integer numberOfRows) {
 		if(sheet == null || sheet.getWorkBook() == null || sheet.getWorkBook().getValue() == null || sheet.getValue() == null)

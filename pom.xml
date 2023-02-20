@@ -9,35 +9,24 @@
 	</parent>
 	<groupId>org.cyk.extension.file</groupId>
 	<artifactId>file-extension</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>File extension</name>
-	
 	<properties>
-		<org.apache.poi.poi.version>3.17</org.apache.poi.poi.version>
-		<org.apache.poi.poi-ooxml.version>3.17</org.apache.poi.poi-ooxml.version>
+		<com.monitorjbl.xlsx-streamer.version>2.2.0</com.monitorjbl.xlsx-streamer.version>
 		<org.jboss.weld.weld-junit5.version>4.0.0.Final</org.jboss.weld.weld-junit5.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>${org.apache.poi.poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>${org.apache.poi.poi-ooxml.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>stax</groupId>
-					<artifactId>stax-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.monitorjbl</groupId>
+			<artifactId>xlsx-streamer</artifactId>
+			<version>${com.monitorjbl.xlsx-streamer.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-junit5</artifactId>
 			<version>${org.jboss.weld.weld-junit5.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
