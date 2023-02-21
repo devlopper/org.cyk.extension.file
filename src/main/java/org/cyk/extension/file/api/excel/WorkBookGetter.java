@@ -24,6 +24,6 @@ public interface WorkBookGetter {
 		private byte[] bytes;
 		private File file;
 		private String fileName;
-		private Boolean isDynamic;
-	}	
+		private Boolean batchable;
+	}
 }

@@ -13,8 +13,9 @@ public abstract class AbstractWorkBookGetterImpl implements WorkBookGetter,Seria
 	public WorkBook get(Arguments arguments) {
 		if(arguments == null)
 			return null;
+		Boolean batchable = arguments.getBatchable();
 		if(arguments.getFile() != null)
-			return __get__(arguments.getFile());
+			return __get__(arguments.getFile(),batchable);
 		InputStream inputStream = arguments.getInputStream();
 		if(inputStream == null && arguments.getBytes() != null && arguments.getBytes().length > 0)
 			inputStream = new ByteArrayInputStream(arguments.getBytes());
@@ -26,7 +27,7 @@ public abstract class AbstractWorkBookGetterImpl implements WorkBookGetter,Seria
 			}
 		if(inputStream == null)
 			throw new RuntimeException(NO_INPUT_STREAM_MESSAGE);
-		return __get__(inputStream);
+		return __get__(inputStream,batchable);
 	}
 	
 	@Override
@@ -34,8 +35,8 @@ public abstract class AbstractWorkBookGetterImpl implements WorkBookGetter,Seria
 		return get(new Arguments().setInputStream(inputStream));
 	}
 	
-	protected abstract WorkBook __get__(InputStream inputStream);
-	protected abstract WorkBook __get__(File file);
+	protected abstract WorkBook __get__(InputStream inputStream,Boolean batchable);
+	protected abstract WorkBook __get__(File file,Boolean batchable);
 	
 	@Override
 	public WorkBook get(byte[] bytes) {

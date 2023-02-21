@@ -81,4 +81,27 @@ public class ExcelSheetReaderUnitTest {
 						)));
 		assertThat(arrays.length).isEqualTo(257699);
 	}
+	
+	/**/
+	
+	@Test
+	public void read_batchable() throws Exception {
+		String[][] array = sheetReader.read(new SheetReader.Arguments()
+				.setSheetGetterArguments(new SheetGetter.Arguments().setWorkBookGetterArguments(new WorkBookGetter.Arguments().setBatchable(Boolean.TRUE).setInputStream(new FileInputStream(
+				"src/test/resources/org/cyk/extension/file/api/excel/01.xlsx")))));
+		assertThat(array[0][0]).isEqualTo("Column01");
+		assertThat(array[0][1]).isEqualTo("Column02");
+		assertThat(array[0][2]).isEqualTo("Column03");
+		assertThat(array[0][3]).isBlank();
+		assertThat(array[0][4]).isEqualTo("Column04");
+	}
+	
+	@Test
+	public void all_250000_batchable() throws Exception {
+		String[][] arrays = sheetReader.read(new SheetReader.Arguments().setNumberOfColumns(2).setSheetGetterArguments(new SheetGetter.Arguments()
+				.setWorkBookGetterArguments(new WorkBookGetter.Arguments().setBatchable(Boolean.TRUE)
+						.setFile(new File("src/test/resources/org/cyk/extension/file/api/excel/chargements_all01.xlsx"))
+						)));
+		assertThat(arrays.length).isEqualTo(257699);
+	}
 }
