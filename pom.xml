@@ -14,6 +14,8 @@
 	<name>File extension</name>
 	<properties>
 		<com.monitorjbl.xlsx-streamer.version>2.2.0</com.monitorjbl.xlsx-streamer.version>
+		<xerces.xercesImpl.version>2.12.2</xerces.xercesImpl.version>
+		<stax.stax.version>1.2.0</stax.stax.version>
 		<org.jboss.weld.weld-junit5.version>4.0.0.Final</org.jboss.weld.weld-junit5.version>
 	</properties>
 	<dependencies>
@@ -22,6 +24,19 @@
 			<artifactId>xlsx-streamer</artifactId>
 			<version>${com.monitorjbl.xlsx-streamer.version}</version>
 		</dependency>
+		
+		<!-- Those dependencies are implementation of JAX-->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>${xerces.xercesImpl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax</artifactId>
+			<version>${stax.stax.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-junit5</artifactId>
