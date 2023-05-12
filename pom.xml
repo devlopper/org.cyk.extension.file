@@ -25,7 +25,7 @@
 			<version>${com.monitorjbl.xlsx-streamer.version}</version>
 		</dependency>
 		
-		<!-- Those dependencies are implementation of JAX-->
+		<!-- Those dependencies are implementation of JAXP -->
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
